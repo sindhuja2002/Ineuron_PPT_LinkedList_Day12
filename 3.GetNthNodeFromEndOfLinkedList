@@ -1,0 +1,73 @@
+#question 3
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def get_nth_from_end(head, n):
+    if head is None:
+        return -1
+
+    slow_ptr = head
+    fast_ptr = head
+
+    # Move the fast pointer n nodes ahead of the slow pointer
+    for _ in range(n):
+        if fast_ptr is None:
+            return -1  # n is greater than the number of nodes in the linked list
+        fast_ptr = fast_ptr.next
+
+    # Move both pointers simultaneously until the fast pointer reaches the end
+    while fast_ptr is not None:
+        slow_ptr = slow_ptr.next
+        fast_ptr = fast_ptr.next
+
+    # At this point, the slow pointer is at the Nth node from the end
+    return slow_ptr.val
+
+
+# Example usage
+# Example 1
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+head.next.next.next.next = ListNode(5)
+head.next.next.next.next.next = ListNode(6)
+head.next.next.next.next.next.next = ListNode(7)
+head.next.next.next.next.next.next.next = ListNode(8)
+head.next.next.next.next.next.next.next.next = ListNode(9)
+
+N = 2
+
+print("Input:")
+curr_node = head
+while curr_node:
+    print(curr_node.val, end="->")
+    curr_node = curr_node.next
+print("NULL")
+
+output = get_nth_from_end(head, N)
+print(f"Output: {output}")
+
+# Example 2
+head = ListNode(10)
+head.next = ListNode(5)
+head.next.next = ListNode(100)
+head.next.next.next = ListNode(5)
+
+N = 5
+
+print("\nInput:")
+curr_node = head
+while curr_node:
+    print(curr_node.val, end="->")
+    curr_node = curr_node.next
+print("NULL")
+
+output = get_nth_from_end(head, N)
+print(f"Output: {output}")
+
+#TC - O(N)----N - no. of nodes in ll
+#SC - O(1)
