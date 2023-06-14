@@ -1,0 +1,109 @@
+#question 6
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def skip_delete_nodes(head, M, N):
+    if M == 0 or head is None:
+        return head
+
+    current = head
+    prev = None
+
+    while current is not None:
+        # Skip M nodes
+        for _ in range(M):
+            if current is None:
+                return head
+            prev = current
+            current = current.next
+
+        # Delete N nodes
+        for _ in range(N):
+            if current is None:
+                break
+            prev.next = current.next
+            current = current.next
+
+    return head
+
+
+def print_linked_list(head):
+    while head is not None:
+        print(head.val, end=" ")
+        head = head.next
+    print()
+
+
+# Example usage
+# Example 1
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+head.next.next.next.next = ListNode(5)
+head.next.next.next.next.next = ListNode(6)
+head.next.next.next.next.next.next = ListNode(7)
+head.next.next.next.next.next.next.next = ListNode(8)
+
+M = 2
+N = 2
+
+print("Input:")
+print_linked_list(head)
+
+head = skip_delete_nodes(head, M, N)
+
+print("Output:")
+print_linked_list(head)
+
+# Example 2
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+head.next.next.next.next = ListNode(5)
+head.next.next.next.next.next = ListNode(6)
+head.next.next.next.next.next.next = ListNode(7)
+head.next.next.next.next.next.next.next = ListNode(8)
+head.next.next.next.next.next.next.next.next = ListNode(9)
+head.next.next.next.next.next.next.next.next.next = ListNode(10)
+
+M = 3
+N = 2
+
+print("\nInput:")
+print_linked_list(head)
+
+head = skip_delete_nodes(head, M, N)
+
+print("Output:")
+print_linked_list(head)
+
+# Example 3
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+head.next.next.next.next = ListNode(5)
+head.next.next.next.next.next = ListNode(6)
+head.next.next.next.next.next.next = ListNode(7)
+head.next.next.next.next.next.next.next = ListNode(8)
+head.next.next.next.next.next.next.next.next = ListNode(9)
+head.next.next.next.next.next.next.next.next.next = ListNode(10)
+
+M = 1
+N = 1
+
+print("\nInput:")
+print_linked_list(head)
+
+head = skip_delete_nodes(head, M, N)
+
+print("Output:")
+print_linked_list(head)
+
+#TC - O(M+N)----N - no. of nodes in ll to be del ,M ---no of nodes to be retained
+#SC - O(1)
