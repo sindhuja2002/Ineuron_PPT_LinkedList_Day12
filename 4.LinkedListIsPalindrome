@@ -1,0 +1,76 @@
+#question 4
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def is_palindrome(head):
+    if head is None or head.next is None:
+        return True
+
+    slow_ptr = head
+    fast_ptr = head
+
+    # Find the middle node of the linked list
+    while fast_ptr is not None and fast_ptr.next is not None:
+        slow_ptr = slow_ptr.next
+        fast_ptr = fast_ptr.next.next
+
+    # Reverse the second half of the linked list
+    prev_ptr = None
+    curr_ptr = slow_ptr
+    while curr_ptr is not None:
+        next_ptr = curr_ptr.next
+        curr_ptr.next = prev_ptr
+        prev_ptr = curr_ptr
+        curr_ptr = next_ptr
+
+    # Compare the first half with the reversed second half
+    left_ptr = head
+    right_ptr = prev_ptr
+    while right_ptr is not None:
+        if left_ptr.val != right_ptr.val:
+            return False
+        left_ptr = left_ptr.next
+        right_ptr = right_ptr.next
+
+    return True
+
+
+# Example usage
+# Example 1
+head = ListNode('R')
+head.next = ListNode('A')
+head.next.next = ListNode('D')
+head.next.next.next = ListNode('A')
+head.next.next.next.next = ListNode('R')
+
+print("Input:")
+curr_node = head
+while curr_node:
+    print(curr_node.val, end="->")
+    curr_node = curr_node.next
+print("NULL")
+
+output = is_palindrome(head)
+print(f"Output: {'Yes' if output else 'No'}")
+
+# Example 2
+head = ListNode('C')
+head.next = ListNode('O')
+head.next.next = ListNode('D')
+head.next.next.next = ListNode('E')
+
+print("\nInput:")
+curr_node = head
+while curr_node:
+    print(curr_node.val, end="->")
+    curr_node = curr_node.next
+print("NULL")
+
+output = is_palindrome(head)
+print(f"Output: {'Yes' if output else 'No'}")
+
+#TC - O(N)----N - no. of nodes in ll
+#SC - O(1)
