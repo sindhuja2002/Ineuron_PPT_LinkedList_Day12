@@ -1,0 +1,91 @@
+#question 5
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def detect_and_remove_loop(head):
+    if head is None or head.next is None:
+        return
+
+    slow_ptr = head
+    fast_ptr = head
+
+    # Detect if there is a loop in the linked list
+    while fast_ptr is not None and fast_ptr.next is not None:
+        slow_ptr = slow_ptr.next
+        fast_ptr = fast_ptr.next.next
+
+        if slow_ptr == fast_ptr:
+            break
+
+    # If there is no loop, return
+    if slow_ptr != fast_ptr:
+        return
+
+    # Move the slow pointer to the head of the linked list
+    slow_ptr = head
+
+    # Find the start of the loop
+    while slow_ptr.next != fast_ptr.next:
+        slow_ptr = slow_ptr.next
+        fast_ptr = fast_ptr.next
+
+    # Remove the loop by setting the next pointer of the last node to None
+    fast_ptr.next = None
+
+
+def print_linked_list(head):
+    while head is not None:
+        print(head.val, end=" ")
+        head = head.next
+    print()
+
+
+# Example usage
+# Example 1
+head = ListNode(1)
+head.next = ListNode(3)
+head.next.next = ListNode(4)
+head.next.next.next = head.next  # Creating a loop by connecting the last node to the second node
+
+print("Input:")
+print_linked_list(head)
+
+detect_and_remove_loop(head)
+
+print("Output:")
+print_linked_list(head)
+
+# Example 2
+head = ListNode(1)
+head.next = ListNode(8)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+
+print("\nInput:")
+print_linked_list(head)
+
+detect_and_remove_loop(head)
+
+print("Output:")
+print_linked_list(head)
+
+# Example 3
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+head.next.next.next.next = head  # Creating a loop by connecting the last node to the first node
+
+print("\nInput:")
+print_linked_list(head)
+
+detect_and_remove_loop(head)
+
+print("Output:")
+print_linked_list(head)
+
+
