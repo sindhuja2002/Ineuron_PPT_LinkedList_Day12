@@ -1,0 +1,42 @@
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def has_loop(head):
+    if head is None:
+        return False
+
+    slow_ptr = head
+    fast_ptr = head
+
+    while fast_ptr is not None and fast_ptr.next is not None:
+        slow_ptr = slow_ptr.next
+        fast_ptr = fast_ptr.next.next
+
+        if slow_ptr == fast_ptr:
+            return True
+
+    return False
+
+
+# Example usage
+# Creating a linked list with a loop
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = head.next  # Creating a loop by connecting the last node to the second node
+
+print(has_loop(head))  # Output: True
+
+# Creating a linked list without a loop
+head = ListNode(1)
+head.next = ListNode(8)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+
+print(has_loop(head))  # Output: False
+
+#TC - O(N)----N - no. of nodes in ll
+#SC - O(1)
